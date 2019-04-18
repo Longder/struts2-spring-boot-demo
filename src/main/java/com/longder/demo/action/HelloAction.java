@@ -1,22 +1,34 @@
 package com.longder.demo.action;
 
+import com.longder.demo.service.TestService;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
+import org.springframework.stereotype.Controller;
+
+import javax.annotation.Resource;
 
 @EqualsAndHashCode(callSuper = true)
 @Namespace("/hello")
 @Data
+@Controller
 public class HelloAction extends BaseAction{
 
     private String testValue;
-    @Action(value = "toLogin",results = {
-            @Result(name = "success",location = "templates/hello.jsp")
+
+    @Resource
+    private TestService testService;
+
+    @Action(value = "toLogin.action",results = {
+            @Result(name = "success",location = "/hello.jsp")
     })
     public String test(){
+        System.out.println("testValue:");
+        System.out.println(testValue);
         System.out.println("进入login");
+        testService.test();
         return "success";
     }
 
@@ -25,5 +37,4 @@ public class HelloAction extends BaseAction{
         System.out.println("进入world");
         return "success";
     }
-
 }
