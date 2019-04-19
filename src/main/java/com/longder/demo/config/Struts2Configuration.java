@@ -10,25 +10,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import javax.servlet.DispatcherType;
 
 @Configuration
-public class Struts2Configuration  implements WebMvcConfigurer {
-
-
-    /**
-     * 资源映射，把url映射到src下classpath
-     * @param registry ResourceHandlerRegistry
-     */
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/templates/**")
-                .addResourceLocations("classpath:/templates/");
-    }
+public class Struts2Configuration {
 
     @Bean
     public FilterRegistrationBean filterRegistrationBean(){
         FilterRegistrationBean<StrutsPrepareAndExecuteFilter> registration = new FilterRegistrationBean();
         registration.setFilter(new StrutsPrepareAndExecuteFilter());
-        registration.addUrlPatterns("*.action");
+        //所有请求都交给struts2了
+        registration.addUrlPatterns("/*");
         registration.addInitParameter("actionPackages","com.longder.demo.action");
-        registration.setDispatcherTypes(DispatcherType.REQUEST,DispatcherType.FORWARD);
         registration.setName("StrutsPrepareAndExecuteFilter");
         return registration;
     }

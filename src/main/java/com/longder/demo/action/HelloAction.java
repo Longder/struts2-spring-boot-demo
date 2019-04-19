@@ -11,7 +11,7 @@ import org.springframework.stereotype.Controller;
 import javax.annotation.Resource;
 
 @EqualsAndHashCode(callSuper = true)
-@Namespace("/hello")
+@Namespace("/")
 @Data
 @Controller
 public class HelloAction extends BaseAction{
@@ -21,7 +21,14 @@ public class HelloAction extends BaseAction{
     @Resource
     private TestService testService;
 
-    @Action(value = "toLogin.action",results = {
+    @Action(value = "",results = {
+            @Result(name = "success",type = "redirect",location = "toLogin")
+    })
+    public String index(){
+        return "success";
+    }
+
+    @Action(value = "toLogin",results = {
             @Result(name = "success",location = "/hello.jsp")
     })
     public String test(){
